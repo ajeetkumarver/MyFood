@@ -4,6 +4,8 @@ const User = require('../models/User')
 const { body, validationResult } = require('express-validator');
 
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const SecretKey = "EndToEndMyFoodjeet12@277001#2002"
 router.post("/createuser", [
     body('email', 'Please enter a valid Email').isEmail(),
     body('name', 'Name Length should be atleast 5 Characters Long').isLength({ min: 5 }),
@@ -23,7 +25,7 @@ router.post("/createuser", [
                 password: securePassword,
 
             })
-            res.json({ success: true });
+            res.json({ success: true});
 
         } catch (error) {
             console.log("error", error);
@@ -52,7 +54,13 @@ router.post("/login", [
             if (!isCorrectPassword) {
                 return res.status(400).json({ errors: "Try with Correct Password" });
             }
-            return res.json({ success: true });
+            const jwtData = {
+                user: {
+                    id: userData.id
+                }
+            }
+            const authToken = jwt.sign(jwtData, SecretKey);
+            return res.json({ success: true ,authToken:authToken});
 
         } catch (error) {
             console.log("error", error);
