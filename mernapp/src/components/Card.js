@@ -1,14 +1,16 @@
 import React from 'react'
 
-export default function  () {
+export default function  (props) {
+    let options=props.options;
+    let priceOptions = Object.keys(options);
+
   return (
     <div> 
         <div>
                 <div className="card mt-3" style={{ "width": "18rem", "maxHeight": "360px" }}>
-                    <img src="https://img.freepik.com/free-photo/fresh-gourmet-meal-beef-taco-salad-plate-generated-by-ai_188544-13382.jpg?w=2000&t=st=1704028296~exp=1704028896~hmac=36fa40886937b5a80f245f1922fa1bd770f3772332d130035830cd7663c98107" className="card-img-top" alt="..." />
+                    <img src={props.ImgUrl} className="card-img-top" alt="..." style={{height:"180px", objectFit:"fill"}} />
                     <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some important text.</p>
+                        <h5 className="card-title">{props.foodName}</h5>
                         <div className='container w-100'>
                             <select className='m-2 h-100  bg-success rounded'>
                                 {Array.from(Array(6), (e, i) => {
@@ -18,8 +20,13 @@ export default function  () {
                                 })}
                             </select>
                             <select className='m-2 h-100  bg-success rounded'>
-                                <option value="half">Half</option>
-                                <option value="full">Full</option>
+                                {
+                                    priceOptions.map((data)=>{
+                                        return(
+                                        <option key={data} value={data}>{data}</option>
+                                        )  
+                                    })
+                                }
                             </select>
                             <div className='d-inline h-100 fs-5'>
                                 Total Price:
