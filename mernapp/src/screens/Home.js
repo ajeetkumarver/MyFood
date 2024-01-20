@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Card from '../components/Card'
- 
+
 
 export default function () {
     const [search, setSearch] = useState('');
@@ -42,7 +42,7 @@ export default function () {
                     <div className="carousel-inner" id="carousel">
                         <div className='carousel-caption' style={{ zIndex: "10" }}>
                             <div className="d-flex justify-content-center">
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={(e)=>{setSearch(e.target.value)}} />
+                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={search} onChange={(e) => { setSearch(e.target.value) }} />
                                 {/* <button className="btn btn-outline-success text-white bg-success" type="submit">Search</button> */}
                             </div>
 
@@ -54,7 +54,7 @@ export default function () {
                             <img src="https://source.unsplash.com/random/900×700/?pastry" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src="https://source.unsplash.com/random/900×700/?momos" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
+                            <img src="https://source.unsplash.com/random/900×700/?pizza" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -83,9 +83,9 @@ export default function () {
                                         .map((filterFoodItem) => {
                                             return (
                                                 <div className='col-12 col-md-6 col-lg-3'>
-                                                    <Card foodName={filterFoodItem.name}
+                                                    <Card foodItems={filterFoodItem}
                                                         options={filterFoodItem.options[0]}
-                                                        ImgUrl={filterFoodItem.img}></Card>
+                                                    ></Card>
                                                 </div>
                                             )
                                         })
