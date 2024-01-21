@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react';
 import { useDispatchCart, useCart } from './ContextReducer'
+import alertify from 'alertifyjs';
+import 'alertifyjs/build/css/alertify.min.css'; 
+
 export default function (props) {
     let options = props.options;
     let priceOptions = Object.keys(options);
@@ -23,15 +26,18 @@ export default function (props) {
         if (food.length !== 0) {
             if (food.size === size) {
                 await dispatch({ type: "UPDATE", id: props.foodItems._id, price: finalPrice, qty: qty });
+                alertify.success("your Item is added into cart")
             }
             else if (food.size !== size) {
                 await dispatch({ type: "ADD", id: props.foodItems._id, name: props.foodItems.name, price: finalPrice, qty: qty, size: size });
                 //console.log(data);
+                alertify.success("your Item is added into cart")
                 return
             }
             return
         }
         await dispatch({ type: "ADD", id: props.foodItems._id, name: props.foodItems.name, price: finalPrice, qty: qty, size: size });
+        alertify.success("your Item is added into cart")
 
     }
     let finalPrice = qty * parseInt(options[size]);

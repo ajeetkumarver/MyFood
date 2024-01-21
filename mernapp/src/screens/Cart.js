@@ -1,6 +1,9 @@
 import React from 'react'
 import Delete from '@material-ui/icons/Delete'
 import { useCart, useDispatchCart } from '../components/ContextReducer';
+import alertify from 'alertifyjs';
+import 'alertifyjs/build/css/alertify.min.css'; 
+
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
@@ -37,10 +40,82 @@ export default function Cart() {
     console.log("JSON RESPONSE:::::", response.status)
     if (response.status === 200) {
       dispatch({ type: "DROP" })
+      alertify.success('Congratulations !! Your order is placed');
     }
   }
 
   let totalPrice = data.reduce((total, food) => total + food.price, 0)
+
+
+
+  const initPayment = (data) => {
+    const options = {
+        key: "YOUR_RAZORPAY_KEY",
+        amount: data.amount,
+        currency: data.currency,
+        name: "MyFood",
+        description: "Test Transaction",
+        //image: book.img,
+        order_id: data.id,
+        handler: async (response) => {
+            try {
+                const verifyUrl = "http://localhost:5001/api/verifyPayment";
+                const verifyResponse = await fetch(verifyUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(response),
+                });
+             console.log(verifyResponse);
+                if (verifyResponse.status===200) {
+                    const data = await verifyResponse.json();
+                    
+                    handleCheckOut();
+                    console.log(data);
+                } else {
+                    console.log('Error:', verifyResponse.status);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        },
+        
+        theme: {
+            color: "#3399cc",
+        },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+};
+
+const handlePayment = async () => {
+    try {
+        const orderUrl = "http://localhost:5001/api/payment";
+        const response = await fetch(orderUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ amount: totalPrice }),
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            initPayment(data.data);
+        } else {
+            console.log('Error:', response.status);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+    
+};
+
+
+
+
   return (
     <div>
 
@@ -65,13 +140,14 @@ export default function Cart() {
                 <td>{food.qty}</td>
                 <td>{food.size}</td>
                 <td>{food.price}</td>
-                <td ><button type="button" className="btn p-0"><Delete onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> </td></tr>
+                <td ><button type="button" className="btn p-0"><Delete onClick={() => { dispatch({ type: "REMOVE", index: index })
+                alertify.success("Item is removed from cart")  }} /></button> </td></tr>
             ))}
           </tbody>
         </table>
         <div><h1 className='fs-2'>Total Price: {totalPrice}/-</h1></div>
         <div>
-          <button className='btn bg-success mt-5 ' onClick={handleCheckOut} > Check Out </button>
+          <button className='btn bg-success mt-5 ' onClick={handlePayment} > Check Out </button>
         </div>
       </div>
 
