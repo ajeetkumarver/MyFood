@@ -16,7 +16,6 @@ router.post('/orderData', async (req, res) => {
     if (emailId === null) {
         try {
             console.log(data)
-            console.log("1231242343242354", req.body.email)
             await Order.create({
                 email: req.body.email,
                 order_data: [data]

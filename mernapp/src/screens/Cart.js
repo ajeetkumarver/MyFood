@@ -51,7 +51,7 @@ export default function Cart() {
 
   const initPayment = (data) => {
     const options = {
-        key: "YOUR_RAZORPAY_KEY",
+        key: "rzp_test_GODY7nXJ8BiC5b",
         amount: data.amount,
         currency: data.currency,
         name: "MyFood",
