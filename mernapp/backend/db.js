@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb+srv://myfood:Ajeet12@@cluster0.ajlzsn9.mongodb.net/myfood?retryWrites=true&w=majority';
+const dotenv = require("dotenv").config();
+const mongoURI = process.env.mongoURI;
 
 const connectToMongoDb = async () => {
     await mongoose.connect(mongoURI, { useNewUrlParser: true }, async (err, res) => {

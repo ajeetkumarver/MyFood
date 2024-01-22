@@ -3,6 +3,7 @@ import Delete from '@material-ui/icons/Delete'
 import { useCart, useDispatchCart } from '../components/ContextReducer';
 import alertify from 'alertifyjs';
 import 'alertifyjs/build/css/alertify.min.css'; 
+import yourImage from './logo-color.png'; 
 
 export default function Cart() {
   let data = useCart();
@@ -55,7 +56,7 @@ export default function Cart() {
         currency: data.currency,
         name: "MyFood",
         description: "Test Transaction",
-        //image: book.img,
+        image: yourImage,
         order_id: data.id,
         handler: async (response) => {
             try {

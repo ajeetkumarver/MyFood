@@ -4,6 +4,8 @@ import { Badge  } from 'react-bootstrap';
 import Modal from '../Modal';
 import Cart from '../screens/Cart';
 import { useCart } from './ContextReducer';
+import yourImage from './logo-color.png'; 
+
 
 export default function Navbar() {
   let data =useCart();
@@ -19,7 +21,9 @@ export default function Navbar() {
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-success">
         <div className="container-fluid">
-          <Link className="navbar-brand fs-1 fst-italic" to="/">MyFood</Link>
+        <Link  to="/"> <img src={yourImage} style={{ width: '60px', height: '50px' }} alt=".."/></Link>
+          {/* { <Link className="navbar-brand fs-3 fst-italic" to="/">MyFood</Link> } */}
+          
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="/navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

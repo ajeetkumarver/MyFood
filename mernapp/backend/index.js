@@ -25,5 +25,5 @@ app.use('/api', require("./Routes/OrderData"))
 app.use('/api', require("./Routes/Payment"))
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-  console.log(process.env.KEY_ID);
+  
 })
